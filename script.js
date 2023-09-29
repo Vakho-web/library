@@ -34,7 +34,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
                 const newMovie = new Movie(movieNameValue, directorValue, actorValue, movieLengthValue, descriptionValue);
     
-                movieLibrary.push(newMovie);
+                const relevantName = movieNameValue.toLowerCase();
+
+                movieLibrary[relevantName] = newMovie;
             
                 movieName.value = "";
                 director.value = "";
