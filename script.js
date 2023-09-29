@@ -9,11 +9,42 @@ function Movie(name, director, actor, length, description) {
     }
 }
 
+const movieLibrary = [];
 
 document.addEventListener('DOMContentLoaded', () => {
-    
-    const btn = document.getElementById("searchMovie");
+    const searchBtn = document.getElementById("searchMovie");
+    const newMovieBtn = document.getElementById("newMovieBtn");
+    const movieName = document.getElementById("movie_name");
+    const director = document.getElementById("director");
+    const actor = document.getElementById("actor");
+    const movieLength = document.getElementById("movLength");
+    const description = document.getElementById("description");
 
+    newMovieBtn.addEventListener('click', createNewEntry);
+
+        function createNewEntry() {
+            if(movieName.value === "" || director.value === "" || actor.value === "" || movieLength.value === "" || description.value === "") {
+                alert("fill all fields")
+            } else {
+                const movieNameValue = movieName.value;
+                const directorValue = director.value;
+                const actorValue = actor.value;
+                const movieLengthValue = movieLength.value;
+                const descriptionValue = description.value;
     
+                const newMovie = new Movie(movieNameValue, directorValue, actorValue, movieLengthValue, descriptionValue);
+    
+                movieLibrary.push(newMovie);
+            
+                movieName.value = "";
+                director.value = "";
+                actor.value = "";
+                movieLength.value = "";
+                description.value = "";
+    
+                console.log('new movie entry created')
+            }
+        }
+   
 
 })
