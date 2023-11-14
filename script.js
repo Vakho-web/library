@@ -12,6 +12,7 @@ function Movie(name, director, actor, length, description) {
 const movieLibrary = [];
 
 document.addEventListener('DOMContentLoaded', () => {
+    const newForm = document.getElementById("newForm");
     const searchBtn = document.getElementById("searchMovie");
     const newMovieBtn = document.getElementById("newMovieBtn");
     const movieName = document.getElementById("movie_name");
@@ -19,9 +20,35 @@ document.addEventListener('DOMContentLoaded', () => {
     const actor = document.getElementById("actor");
     const movieLength = document.getElementById("movLength");
     const description = document.getElementById("description");
+    const newMovieForm = document.querySelector(".newMovie");
+
+    newForm.addEventListener("click", () => {
+        newMovieForm.style.display = "block";
+    });
+
+    function render() {
+        let movieList = document.querySelector(".movieList");
+        movieList.innerHTML = "";
+        for(let i = 0; i < movieLibrary.length; i++) {
+            let movie = movieLibrary[i];
+            let movieEl = document.createElement("div")
+            movieEl.innerHTML = `<div class="card">
+                                    <div class="card-header">
+                                        <h2>${movie.name}</h2>
+                                        <button class="delete-card"> X </button>
+                                    </div>
+                                    <div class="card-body">
+                                        <h3>Directed By ${movie.director}</h3>
+                                        <h3>Main Actors: ${movie.actor}</h3>
+                                        <h3>Length: ${movie.length}</h3>
+                                        <h3>Summary: ${movie.description}</h3>
+                                    </div>
+                                </div>`;
+            movieList.appendChild(movieEl);
+        }
+    }
 
     newMovieBtn.addEventListener('click', createNewEntry);
-
         function createNewEntry() {
             if(movieName.value === "" || director.value === "" || actor.value === "" || movieLength.value === "" || description.value === "") {
                 alert("fill all fields")
@@ -33,10 +60,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 const descriptionValue = description.value;
     
                 const newMovie = new Movie(movieNameValue, directorValue, actorValue, movieLengthValue, descriptionValue);
-    
-                const relevantName = movieNameValue.toLowerCase();
 
-                movieLibrary[relevantName] = newMovie;
+                movieLibrary.push(newMovie)
+    
+/*              const relevantName = movieNameValue.toLowerCase();
+
+                movieLibrary[relevantName] = newMovie; */
             
                 movieName.value = "";
                 director.value = "";
@@ -45,6 +74,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 description.value = "";
     
                 console.log('new movie entry created')
+                render();
+                /* newMovieForm.style.display = "none"; */
             }
         }
    
