@@ -1,12 +1,22 @@
-function Movie(name, director, actor, length, description) {
+function Movie(name, director, actor, length, description, watched) {
     this.name = name,
     this.director = director,
     this.actor = actor,
     this.length = length,
     this.description = description,
+    this.watched = watched
     this.info = function() {
         console.log(`Movie name: ${this.name}, directed by ${this.director}, main actor: ${this.actor}, runtime: ${this.length}, description: ${this.description}}`)
     }
+}
+
+Movie.prototype.toggleWatched = function() {
+    this.watched = !this.watched;
+}
+
+function toggleWatche(index) {
+    movieLibrary[index].toggleWatched();
+    render();
 }
 
 const movieLibrary = [];
@@ -38,8 +48,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const actorValue = actor.value;
                 const movieLengthValue = movieLength.value;
                 const descriptionValue = description.value;
+                const watchedValue = watched.checked
                 
-                const newMovie = new Movie(movieNameValue, directorValue, actorValue, movieLengthValue, descriptionValue);
+                const newMovie = new Movie(movieNameValue, directorValue, actorValue, movieLengthValue, descriptionValue, watchedValue);
                 
                 movieLibrary.push(newMovie)
     
@@ -70,13 +81,15 @@ document.addEventListener('DOMContentLoaded', () => {
             movieEl.innerHTML = `<div class="card">
                                     <div class="card-header">
                                         <h2>${movie.name}</h2>
-                                        <button id="delete-card" onclick="deleteCard(${i})"> X </button>
                                     </div>
                                     <div class="card-body">
                                         <h3>Directed By ${movie.director}</h3>
                                         <h3>Main Actors: ${movie.actor}</h3>
                                         <h3>Length: ${movie.length}</h3>
                                         <h3>Summary: ${movie.description}</h3>
+                                        <p class="watched-status">${movie.watched ? "Watched" : "Not Watched"}</p>
+                                        <button id="toggle-watched" onclick="toggleWatche(${i})"> Toggle Watched </button>
+                                        <button id="delete-card" onclick="deleteCard(${i})"> Remove </button>
                                     </div>
                                 </div>`;
             movieList.appendChild(movieEl);
